@@ -19,12 +19,11 @@ class Blogger(AbstractUser):
         verbose_name = 'blogger'
         verbose_name_plural = 'bloggers'
 
+
 @receiver(pre_save, sender=Blogger)
 def set_blogger_inactive(sender, instance, **kwargs):
     """Set new bloggers as inactive."""
     instance.is_active = False
-    instance.save()
-
 
 @receiver(post_save, sender=Blogger)
 def send_activation_code(sender, instance, created, **kwargs):
