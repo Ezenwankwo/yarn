@@ -2,7 +2,7 @@ import pyotp
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
 
@@ -18,6 +18,13 @@ class Blogger(AbstractUser):
     class Meta:
         verbose_name = 'blogger'
         verbose_name_plural = 'bloggers'
+
+@receiver(pre_save, sender=Blogger)
+def set_blogger_inactive(sender, instance, **kwargs):
+    """Set new bloggers as inactive."""
+    instance.is_active = False
+    instance.save()
+
 
 @receiver(post_save, sender=Blogger)
 def send_activation_code(sender, instance, created, **kwargs):
