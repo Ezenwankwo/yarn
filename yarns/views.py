@@ -18,6 +18,5 @@ class BloggerFeedView(ReadOnlyModelViewSet):
     def get_queryset(self):
         relations = FollowRelation.objects.filter(follower=self.request.user)
         following = [relation.following.id for relation in relations]
-        print(following)
         yarnings = Yarn.objects.filter(blogger__in=following)
         return yarnings
