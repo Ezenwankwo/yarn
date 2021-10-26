@@ -35,7 +35,6 @@ class FollowRelationView(APIView):
     """
     Bloggers can follow and unfollow each other
     """
-    permission_classes = [AllowAny]
     
     def get(self, request, follower_id, following_id):
         follower = get_object_or_404(Blogger, pk=follower_id)
